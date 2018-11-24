@@ -2,8 +2,6 @@ const webpack = require("webpack")
 const path = require("path")
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const YMU_CUSTOME = path.resolve(__dirname, 'src/custome-vars.scss')
-
 module.exports = {
   entry: './src/main.js',
   mode: "development",
@@ -18,13 +16,14 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
-          'sass-loader',
           {
-            loader: './recover-sass-loader',
+            loader: 'sass-loader',
             options: {
-              sassFile: 'vars.scss',
-              loadCoverSassFile: () => {
-                return YMU_CUSTOME
+              beforeRender (renderOption) {
+                const str = `@import 'vars.scss';\n`;
+                const append = `@import 'yellow.scss';\n`;
+                // const start = renderOption.data.search(str)
+                renderOption.data = renderOption.data.replace(str, `${str}${append}`);
               }
             }
           }

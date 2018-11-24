@@ -1,6 +1,6 @@
-@import 'vars.scss';
+$color: yellow;
 
 body {
   height: 200px;
-  background: $color-red;
+  background: $color;
 }
